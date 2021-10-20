@@ -6,7 +6,7 @@ import { Color, FlatShading, Texture, TextureLoader } from 'three';
 const scene = new THREE.Scene(); //This is the entire 3D scene for three.js
 
 //This is the perspective camera for the three.js scene
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight); //FOV, aspect ratio, close culling, far culling
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); //FOV, aspect ratio, close culling, far culling (aspect ratio changes later)
 
 const renderer = new THREE.WebGL1Renderer({
     canvas: document.querySelector('#bg'),
@@ -18,50 +18,38 @@ const renderer = new THREE.WebGL1Renderer({
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth,window.outerHeight);
 
-camera.position.setZ(35);
-
-renderer.render(scene, camera);
-
-//!!!TORUS!!!
-const TorusGeometry = new THREE.TorusGeometry(10,2,3,30);
-const TorusMaterial = new THREE.MeshBasicMaterial({ //Torus's material all some parameters
-    color: 0xFF6347,
-    wireframe: true,
-    // flatShading: true,
-});
-
-const TorusMesh = new THREE.Mesh(TorusGeometry, TorusMaterial); //Combining the torus geometry and material info into one package
-// scene.add(TorusMesh); //adding the torus, disabled for now since steve is working.
 
 
+camera.position.setZ(35); //The number is the distance on the 'Z' axis.
 
-//!!!WIP STEVE!!!
-//LOADING CUSTOM STEVE.GLTF
+renderer.render(scene, camera); //This makes the render go :)
 
-// var SteveTextureLoader = new THREE.TextureLoader();//Defining the texture loader
-// var SteveTexture = SteveTextureLoader.load(
-//     '/Resources/Textures/Steve.png'); //loading in the steve skin
+window.addEventListener('resize', onWindowResize, false);
+function onWindowResize(){
+
+    camera.aspect = (window.innerWidth / window.innerHeight);
+    camera.updateProjectionMatrix;
 
 
-// var SteveMaterial = new THREE.MeshBasicMaterial({
+    renderer.setSize(window.innerWidth, window.outerHeight);
 
-//     map: SteveTexture,
-//     FlatShading: true
-
-// });
+}
 
 //IMPORTING THE STEVE SKIN
 var SkinTextureLoader = new THREE.TextureLoader();
 
 var SkinMaterial = new THREE.MeshBasicMaterial({
 
-    map: SkinTextureLoader.load('/Resources/Textures/Steve.png')
+    map: SkinTextureLoader.load('/Resources/Textures/Skin.png'),
+    transparent: true,
+    alphaTest: true,
 
 });
 
+SkinMaterial.map.transparent = true;
 SkinMaterial.map.flipY = false;
 SkinMaterial.map.magFilter = THREE.NearestFilter;
-// SkinMaterial.minFilter = THREE.NearestFilter;
+// SkinMaterial.minFilter = THREE.NearestFilter; //This is commented out as it doesn't seem needed yet/ever
 
 
 
@@ -80,33 +68,22 @@ SteveLoader.load('/Resources/Models/Steve/scene.gltf',
         });
 
         SteveModel = stevegltf.scene;
-        if(scene.children.length != 1){ //steve and alex are different models but I don't have enough implemented to fix this yet
+        if(scene.children.length != 1){ //steve and alex are different models but I don't have enough implemented to fix this check yet
 
             scene.add(SteveModel);
 
         }
-    }, //loading 
+    }, //loading output
     function (SteveLoading){
 
         console.log(('Steve model ' + SteveLoading.loaded / SteveLoading.total * 100) + '% loaded');
 
-    }, //errors
+    }, //errors output
     function (SteveLoadingError){
 
         console.log('oops something is broken when loading steve :( ' + SteveLoadingError.error);
 
     });
-
-//CUSTOM STEVE TEXTURE
-//TO DO STEVE TEXTURE
-// https://stackoverflow.com/questions/56660584/how-to-override-gltf-materials-in-three-js
-// https://threejs.org/docs/?q=isMesh#api/en/core/Object3D.traverse 
-// https://stackoverflow.com/questions/52236033/how-to-dynamically-overlay-a-texture-from-a-gltf-model-three-js
-// https://threejs.org/docs/#examples/en/loaders/GLTFLoader
-// https://jsfiddle.net/vcx5e4g6/
-// https://discourse.threejs.org/t/changing-material-s-of-a-mesh-in-runtime/10122
-// https://threejs.org/docs/#api/en/loaders/ObjectLoader
-// https://www.youtube.com/watch?v=Q7AOvWpIVHU&t=214s
 
 //This is the function I can call later that redraws the scene/page, as well as anything else I want.
 function AnimateScene(){
