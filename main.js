@@ -44,7 +44,7 @@ var SkinTextureLoader = new THREE.TextureLoader();
 
 var SkinMaterial = new THREE.MeshBasicMaterial({
 
-    map: SkinTextureLoader.load('/Resources/Textures/Skin.png'),
+    map: SkinTextureLoader.load('dist/skin.png'),
     transparent: true,
     alphaTest: true,
 
@@ -59,7 +59,7 @@ SkinMaterial.map.magFilter = THREE.NearestFilter;
 //IMPORTING THE STEVE MODEL
 var SteveLoader = new GLTFLoader();//Defining the .gltf loader
 var SteveModel;
-SteveLoader.load('/Resources/Models/Steve/scene.gltf',
+SteveLoader.load('dist/scene.gltf',
     function (stevegltf){
 
         SteveModel = stevegltf.scene;
