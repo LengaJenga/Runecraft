@@ -1,8 +1,8 @@
 import './style.css'
-import {OrbitControls} from 'https://unpkg.com/three@0.127.0/examples/jsm/controls/OrbitControls.js'
-import * as THREE from 'https://unpkg.com/three@0.127.0/build/three.module.js';
-import { GLTFLoader } from 'https://unpkg.com/three@0.127.0/examples/jsm/loaders/GLTFLoader.js';
-// import { Color, FlatShading, Texture, TextureLoader } from 'three';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { Color, FlatShading, Texture, TextureLoader } from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 const scene = new THREE.Scene(); //This is the entire 3D scene for three.js
 
@@ -44,7 +44,7 @@ var SkinTextureLoader = new THREE.TextureLoader();
 
 var SkinMaterial = new THREE.MeshBasicMaterial({
 
-    map: SkinTextureLoader.load('dist/skin.png'),
+    map: SkinTextureLoader.load('./skin.png'),
     transparent: true,
     alphaTest: true,
 
@@ -59,7 +59,7 @@ SkinMaterial.map.magFilter = THREE.NearestFilter;
 //IMPORTING THE STEVE MODEL
 var SteveLoader = new GLTFLoader();//Defining the .gltf loader
 var SteveModel;
-SteveLoader.load('dist/scene.gltf',
+SteveLoader.load('./scene.gltf',
     function (stevegltf){
 
         SteveModel = stevegltf.scene;
