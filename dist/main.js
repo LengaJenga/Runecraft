@@ -1,8 +1,8 @@
 import './style.css'
-import * as THREE from 'three';
-import { GLTFLoader } from 'three';
-import { Color, FlatShading, Texture, TextureLoader } from 'three';
-import { OrbitControls } from 'three';
+import {OrbitControls} from 'https://unpkg.com/three@0.127.0/examples/jsm/controls/OrbitControls.js'
+import * as THREE from 'https://unpkg.com/three@0.127.0/build/three.module.js';
+import { GLTFLoader } from 'https://unpkg.com/three@0.127.0/examples/jsm/loaders/GLTFLoader.js';
+// import { Color, FlatShading, Texture, TextureLoader } from 'three';
 
 const scene = new THREE.Scene(); //This is the entire 3D scene for three.js
 
