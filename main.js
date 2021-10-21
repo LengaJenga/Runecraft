@@ -2,6 +2,7 @@ import './style.css'
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Color, FlatShading, Texture, TextureLoader } from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 const scene = new THREE.Scene(); //This is the entire 3D scene for three.js
 
@@ -19,22 +20,24 @@ const renderer = new THREE.WebGL1Renderer({
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth,window.outerHeight);
 
-
-
 camera.position.setZ(35); //The number is the distance on the 'Z' axis.
+
+//Orbit camera
+const OrbitCamera = new OrbitControls(camera, renderer.domElement);
 
 renderer.render(scene, camera); //This makes the render go :)
 
-window.addEventListener('resize', onWindowResize, false);
-function onWindowResize(){
+// //Automatic window resize, it doesn't seem to work/do what I want at the moment
+// window.addEventListener('resize', onWindowResize, false);
+// function onWindowResize(){
 
-    camera.aspect = (window.innerWidth / window.innerHeight);
-    camera.updateProjectionMatrix;
+//     camera.aspect = (window.innerWidth / window.innerHeight);
+//     camera.updateProjectionMatrix;
 
 
-    renderer.setSize(window.innerWidth, window.outerHeight);
+//     renderer.setSize(window.innerWidth, window.outerHeight);
 
-}
+// }
 
 //IMPORTING THE STEVE SKIN
 var SkinTextureLoader = new THREE.TextureLoader();
@@ -48,11 +51,10 @@ var SkinMaterial = new THREE.MeshBasicMaterial({
 });
 
 SkinMaterial.map.transparent = true;
+SkinMaterial.map.side = THREE.DoubleSide;
 SkinMaterial.map.flipY = false;
 SkinMaterial.map.magFilter = THREE.NearestFilter;
 // SkinMaterial.minFilter = THREE.NearestFilter; //This is commented out as it doesn't seem needed yet/ever
-
-
 
 //IMPORTING THE STEVE MODEL
 var SteveLoader = new GLTFLoader();//Defining the .gltf loader
@@ -65,13 +67,14 @@ SteveLoader.load('/Resources/Models/Steve/scene.gltf',
         SteveModel.traverse(function (child){
             if (child.isMesh){
                 child.material = SkinMaterial;
+                child.material.side = THREE.DoubleSide; //This makes the transparent bits double sided
             }
         });
 
         SteveModel = stevegltf.scene;
         if(scene.children.length != 1){ //steve and alex are different models but I don't have enough implemented to fix this check yet
 
-            scene.add(SteveModel);
+            scene.add(SteveModel); //adds the steve model to the scene
 
         }
     }, //loading output
@@ -90,9 +93,9 @@ SteveLoader.load('/Resources/Models/Steve/scene.gltf',
 function AnimateScene(){
     requestAnimationFrame(AnimateScene);
     //Do stuff past here!!
+    // SteveModel.rotation.y += 0.005;
 
-    // TorusMesh.rotation.y += 0.003;
-    SteveModel.rotation.y += 0.005;
+    OrbitCamera.update();
 
     //Stop doing stuff past here!!
     renderer.render(scene,camera); //except this, this is ok
