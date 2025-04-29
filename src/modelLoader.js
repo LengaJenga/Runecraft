@@ -5,7 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 export function loadSteveModel(scene, skinMaterial, onLoaded) {
     const SteveLoader = new GLTFLoader();
     SteveLoader.load(
-        '/Resources/Models/Steve/scene.gltf',
+        'Resources/Models/Steve/scene.gltf',
         function (stevegltf) {
             console.log('Steve model loaded successfully');
             let SteveModel = stevegltf.scene;
@@ -31,9 +31,9 @@ export function loadSteveModel(scene, skinMaterial, onLoaded) {
 
 export function createSkinMaterial() {
     const SkinTextureLoader = new THREE.TextureLoader();
-    console.log('Attempting to load skin texture from /Resources/Textures/Skin.png');
+    console.log('Attempting to load skin texture from Resources/Textures/Skin.png');
     const texture = SkinTextureLoader.load(
-        '/Resources/Textures/Skin.png',
+        'Resources/Textures/Skin.png',
         function () {
             console.log('Skin texture loaded successfully');
         },
