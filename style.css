@@ -6,6 +6,6 @@ canvas {
     overflow: hidden;
     width: 100%;
     height: 100%;
-    background-image: url("Resources/Textures/Background2.png");
+    background-image: url("/Runecraft/Resources/Textures/Background2.png");
     background-repeat: repeat;
 }
