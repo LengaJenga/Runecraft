@@ -1,4 +1,6 @@
-import { createRenderer, createScene } from './canvas.js';
+console.log('main.js loaded');
+
+import { createRenderer, createScene, resizeRendererToDisplaySize } from './canvas.js';
 import { createCamera, createOrbitControls } from './camera.js';
 import { createSkinMaterial, loadSteveModel } from './modelLoader.js';
 
@@ -15,6 +17,13 @@ let SteveModel = null;
 loadSteveModel(scene, skinMaterial, (model) => {
     SteveModel = model;
 });
+
+function onWindowResize() {
+    resizeRendererToDisplaySize(renderer);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', onWindowResize);
 
 function AnimateScene() {
     requestAnimationFrame(AnimateScene);

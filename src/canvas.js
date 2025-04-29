@@ -7,10 +7,16 @@ export function createRenderer() {
         alpha: true,
     });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.outerHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight);
     return renderer;
 }
 
 export function createScene() {
     return new THREE.Scene();
+}
+
+export function resizeRendererToDisplaySize(renderer) {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    renderer.setSize(width, height);
 }
