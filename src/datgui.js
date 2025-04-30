@@ -14,7 +14,13 @@ export function initGUI(resetView) {
     gui.add(guiSettings, 'rotationSpeed',0,2,0.01).name('Rotation Speed');
     gui.add(guiSettings, 'rotationEnabled').name('Enable Rotation');
     if (resetView) {
-        gui.add({reset: resetView}, 'reset').name('Reset View');
+        gui.add({
+            reset: () => {
+                guiSettings.rotationEnabled = false;
+                guiSettings.rotationSpeed = 1;
+                resetView();
+            }
+        }, 'reset').name('Reset View');
     }
     return gui;
 }
