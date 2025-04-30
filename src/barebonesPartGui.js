@@ -51,43 +51,58 @@ document.addEventListener('DOMContentLoaded', () => {
     guiDiv.style.left = '10px';
     guiDiv.style.top = '';
     guiDiv.style.right = '';
-    guiDiv.style.background = 'rgba(0,0,0,0.7)';
+    guiDiv.style.background = 'rgba(0, 0, 0, 0)';
     guiDiv.style.color = 'white';
-    guiDiv.style.padding = '10px';
+    guiDiv.style.padding = '4px';
     guiDiv.style.zIndex = 1000;
-    guiDiv.style.width = 'min(90vw, 320px)'; // Much smaller on mobile, max 320px
-    guiDiv.style.maxWidth = '320px';
+    guiDiv.style.width = 'min(98vw, 260px)'; // Wider on mobile, max 260px
+    guiDiv.style.maxWidth = '260px';
     guiDiv.style.minWidth = '140px';
     guiDiv.style.overflow = 'auto';
-    guiDiv.style.fontSize = 'clamp(12px, 2vw, 18px)'; // Responsive font size
+    guiDiv.style.fontSize = 'clamp(10px, 1.2vw, 14px)'; // Smaller font size
+    guiDiv.style.fontFamily = 'monospace, sans-serif';
     document.body.appendChild(guiDiv);
 
     // For each part, add prev/next buttons and a label
     for (const part of Object.keys(PART_IMAGES)) {
         const partDiv = document.createElement('div');
-        partDiv.style.marginBottom = '6px';
-        const label = document.createElement('span');
-        label.textContent = part + ': ';
-        const name = document.createElement('span');
-        name.textContent = assembler.getCurrentImage(part) || '';
-        name.style.margin = '0 8px';
+        partDiv.style.display = 'flex';
+        partDiv.style.alignItems = 'center';
+        partDiv.style.flexWrap = 'nowrap';
+        partDiv.style.marginBottom = '2px';
+        partDiv.style.gap = '2px';
+        partDiv.style.justifyContent = 'center';
         const prevBtn = document.createElement('button');
         prevBtn.textContent = '<';
+        prevBtn.style.padding = '8px';
+        prevBtn.style.minWidth = '0';
+        prevBtn.style.height = '22px';
+        prevBtn.style.fontSize = '1em';
+        prevBtn.style.lineHeight = '1';
         prevBtn.onclick = async () => {
             assembler.prevImage(part);
-            name.textContent = assembler.getCurrentImage(part) || '';
             await updateMainPreview();
         };
+        const label = document.createElement('span');
+        label.textContent = part;
+        label.style.display = 'inline-block';
+        label.style.minWidth = '60px';
+        label.style.textAlign = 'center';
+        label.style.color = '#ffb94a';
+        label.style.fontWeight = 'bold';
         const nextBtn = document.createElement('button');
         nextBtn.textContent = '>';
+        nextBtn.style.padding = '0 8px';
+        nextBtn.style.minWidth = '0';
+        nextBtn.style.height = '22px';
+        nextBtn.style.fontSize = '1em';
+        nextBtn.style.lineHeight = '1';
         nextBtn.onclick = async () => {
             assembler.nextImage(part);
-            name.textContent = assembler.getCurrentImage(part) || '';
             await updateMainPreview();
         };
-        partDiv.appendChild(label);
         partDiv.appendChild(prevBtn);
-        partDiv.appendChild(name);
+        partDiv.appendChild(label);
         partDiv.appendChild(nextBtn);
         guiDiv.appendChild(partDiv);
     }
