@@ -47,12 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create a container for the GUI
     const guiDiv = document.createElement('div');
     guiDiv.style.position = 'fixed';
-    guiDiv.style.top = '10px';
-    guiDiv.style.right = '10px';
+    guiDiv.style.bottom = '10px';      // Move to bottom
+    guiDiv.style.left = '10px';        // Move to left
+    guiDiv.style.top = '';             // Unset top
+    guiDiv.style.right = '';           // Unset right
     guiDiv.style.background = 'rgba(0,0,0,0.7)';
     guiDiv.style.color = 'white';
     guiDiv.style.padding = '10px';
     guiDiv.style.zIndex = 1000;
+    guiDiv.style.width = '28vw';        // Responsive width
+    guiDiv.style.maxWidth = '340px';    // Never exceed 340px
+    guiDiv.style.minWidth = '180px';    // Minimum width for usability
+    guiDiv.style.overflow = 'auto';     // Scroll if content overflows
     document.body.appendChild(guiDiv);
 
     // For each part, add prev/next buttons and a label
