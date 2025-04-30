@@ -14,5 +14,15 @@ export function createCamera() {
 }
 
 export function createOrbitControls(camera, renderer) {
-    return new OrbitControls(camera, renderer.domElement);
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enablePan = false; // Disable camera panning
+    return controls;
+}
+
+export function resetView(camera, controls) {
+    camera.position.setZ(35);
+    camera.position.x = 0;
+    camera.position.y = 0;
+    controls.target.set(0, 0, 0);
+    controls.update();
 }
